@@ -35,6 +35,6 @@ public class JRMPClient1 extends PayloadRunner implements ObjectPayload<Object> 
 
     public static void main(String[] args) throws Exception {
         Thread.currentThread().setContextClassLoader(JRMPClient1.class.getClassLoader());
-        PayloadRunner.run(JRMPClient.class, args);
+        PayloadRunner.run(JRMPClient1.class, args);
     }
 }
